@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>chValidator Demo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container" ng-app="ch.Demo" ng-controller="chDemoController">
+      <div class="row">
+        <div class="col-xs-12">
+          <br />
+          <br />
+          <br />
+          <br />
+          <form>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address*</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email" ng-model="email" ch-validator="required email">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password*</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="password" ch-validator="required password passwordLength">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword2">Password Confirmation*</label>
+              <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Confirm Password" ng-model="passwordConfirmation" ch-validator="required password passwordLength confirm" ch-confirm="password">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPhone">Phone number</label>
+              <input type="text" class="form-control" id="exampleInputPhone" placeholder="XXX-XXX-XXXX" ng-model="phone" ch-validator="phone">
+            </div>
+            <div class="form-group">
+              <label for="exampleInputUrl">Personal URL</label>
+              <input type="url" class="form-control" id="exampleInputUrl" placeholder="URL" ng-model="url" ch-validator="url">
+            </div>
+            <div class="form-group">
+              <label for="exampleSelect">Options*</label>
+              <select class="form-control" id="exampleSelect" ng-model="options" ch-validator="required">
+                <option value="">-- Select --</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+              </select>
+            </div>
+          </form>
+      </div>
+    </div>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.23/angular.min.js"></script>
+    <script src="dist/chValidator.js"></script>
+    <script>
+      angular.module('ch.Demo', ['ch.Validator'])
+      .controller('chDemoController', function($scope) {
+
+      });
+    </script>
+  </body>
+</html>
