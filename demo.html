@@ -24,11 +24,11 @@
             </div>
             <div class="form-group">
               <label for="exampleInputPassword1">Password*</label>
-              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="password" ch-validator="required password passwordLength">
+              <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="password" ch-validator="required password minLength:8 maxLength:20">
             </div>
             <div class="form-group">
               <label for="exampleInputPassword2">Password Confirmation*</label>
-              <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Confirm Password" ng-model="passwordConfirmation" ch-validator="required password passwordLength confirm" ch-confirm="password">
+              <input type="password" class="form-control" id="exampleInputPassword2" placeholder="Confirm Password" ng-model="passwordConfirmation" ch-validator="required password minLength:8 maxLength:20 confirm:password">
             </div>
             <div class="form-group">
               <label for="exampleInputPhone">Phone number</label>
@@ -57,7 +57,8 @@
       angular.module('ch.Demo', ['ch.Validator'])
       .config(function(validatorMessagesProvider) {
         validatorMessagesProvider.setMessages({
-          required: 'This is a custom message. This field is required.'
+          minLength: 'Field must be greater than 8 characters in length',
+          maxLength: 'Field must be less than 20 characters in length'
         });
       })
       .controller('chDemoController', function($scope) {

@@ -13,7 +13,8 @@
     messages.required = 'This field is required';
     messages.email = 'Please enter a valid email';
     messages.password = 'Password must contain a number, a lowercase letter, and an uppercase letter';
-    messages.passwordLength = 'Password must be between 8 and 20 characters in length';
+    messages.minLength = 'Field must be greater than {{N}} characters in length';
+    messages.maxLength = 'Field must be less than {{N}} characters in length';
     messages.url = 'Please enter a valid url starting with http://';
     messages.phone = 'Please enter a valid phone number';
     messages.confirm = 'Fields do not match';

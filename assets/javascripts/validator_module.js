@@ -14,7 +14,8 @@
       REQUIRED: 'required',
       EMAIL: 'email',
       PASSWORD: 'password',
-      PASSWORDLENGTH: 'passwordLength',
+      MINLENGTH: 'minLength',
+      MAXLENGTH: 'maxLength',
       URL: 'url',
       PHONE: 'phone',
       CONFIRM: 'confirm'
@@ -25,7 +26,8 @@
       REQUIRED: 'chRequired',
       EMAIL: 'chEmail',
       PASSWORD: 'chPassword',
-      PASSWORDLENGTH: 'chPassword',
+      MINLENGTH: 'chMinLength',
+      MAXLENGTH: 'chMaxLength',
       URL: 'chUrl',
       PHONE: 'chPhone',
       CONFIRM: 'chConfirm'

@@ -110,25 +110,47 @@ describe('validator', function() {
     });
   });
 
-  describe('validatePasswordLength()', function() {
+  describe('validateMinLength()', function() {
     var
       valid = 'Fooobarsd',
       valid2 = 'FoobarFoobarFoobarFo',
       empty = '',
       invalid = 'Foobar7',
-      invalid2 = 'FoobarFoobarFoobarFoo',
+      invalid2 = 'F',
       notDefined;
 
-    it('should return true for a valid set of passwordLength', function(){
-      expect(service.passwordLength(valid)).to.be.true;
-      expect(service.passwordLength(valid2)).to.be.true;
+    it('should return true for a valid set of minLength', function(){
+      expect(service.minLength(valid, 8)).to.be.true;
+      expect(service.minLength(valid2, '10')).to.be.true;
     });
 
-    it('should return false for an invalid set of passwordLength', function() {
-      expect(service.passwordLength(empty)).to.be.false;
-      expect(service.passwordLength(invalid)).to.be.false;
-      expect(service.passwordLength(invalid2)).to.be.false;
-      expect(service.passwordLength(notDefined)).to.be.false;
+    it('should return false for an invalid set of minLength', function() {
+      expect(service.minLength(empty, 0)).to.be.false;
+      expect(service.minLength(invalid, 8)).to.be.false;
+      expect(service.minLength(invalid2, '2')).to.be.false;
+      expect(service.minLength(notDefined, 0)).to.be.false;
+    });
+  });
+
+  describe('validateMaxLength()', function() {
+    var
+      valid = 'Fooobarsd',
+      valid2 = 'FoobarFoobarFoobarFo',
+      empty = '',
+      invalid = 'Foobar7',
+      invalid2 = 'F',
+      notDefined;
+
+    it('should return true for a valid set of maxLength', function(){
+      expect(service.maxLength(valid, 9)).to.be.true;
+      expect(service.maxLength(valid2, '20')).to.be.true;
+    });
+
+    it('should return false for an invalid set of maxLength', function() {
+      expect(service.maxLength(empty, 0)).to.be.false;
+      expect(service.maxLength(invalid, 5)).to.be.false;
+      expect(service.maxLength(invalid2, '0')).to.be.false;
+      expect(service.maxLength(notDefined, 0)).to.be.false;
     });
   });
 
