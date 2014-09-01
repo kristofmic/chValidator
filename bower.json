@@ -1,8 +1,8 @@
 {
-  "name": "chSnackbar",
+  "name": "chValidator",
   "version": "0.0.1",
   "description": "angular module for snackbar notifications",
-  "main": "chSnackbar.min.js",
+  "main": "chValidator.min.js",
   "authors": [
     "chris hourihan"
   ],
