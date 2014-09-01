@@ -20,26 +20,15 @@
       CONFIRM: 'confirm'
     })
     .constant('VALIDATION_ERROR', {
-      DIGITS: 'pcDigits',
-      TEXT: 'pcText',
-      REQUIRED: 'pcRequired',
-      EMAIL: 'pcEmail',
-      PASSWORD: 'pcPassword',
-      PASSWORDLENGTH: 'pcPassword',
-      URL: 'pcUrl',
-      PHONE: 'pcPhone',
-      CONFIRM: 'pcConfirm'
-    })
-    .constant('VALIDATION_MESSAGE', {
-      DIGITS: 'Please only enter numbers',
-      TEXT: 'Please only enter letters',
-      REQUIRED: 'This field is required',
-      EMAIL: 'Please enter a valid email',
-      PASSWORD: 'Password must contain a number, a lowercase letter, and an uppercase letter',
-      PASSWORDLENGTH: 'Password must be between 8 and 20 characters in length',
-      URL: 'Please enter a valid url starting with http://',
-      PHONE: 'Please enter a valid phone number',
-      CONFIRM: 'Fields do not match'
+      DIGITS: 'chDigits',
+      TEXT: 'chText',
+      REQUIRED: 'chRequired',
+      EMAIL: 'chEmail',
+      PASSWORD: 'chPassword',
+      PASSWORDLENGTH: 'chPassword',
+      URL: 'chUrl',
+      PHONE: 'chPhone',
+      CONFIRM: 'chConfirm'
     })
     .constant('VALIDATION_EVENT', {
       VALIDATE: 'VALIDATE'

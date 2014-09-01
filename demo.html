@@ -55,6 +55,11 @@
     <script src="dist/chValidator.js"></script>
     <script>
       angular.module('ch.Demo', ['ch.Validator'])
+      .config(function(validatorMessagesProvider) {
+        validatorMessagesProvider.setMessages({
+          required: 'This is a custom message. This field is required.'
+        });
+      })
       .controller('chDemoController', function($scope) {
 
       });

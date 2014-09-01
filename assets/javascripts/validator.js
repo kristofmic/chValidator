@@ -71,6 +71,9 @@
       return (!value1 && !value2) || value1 === value2;
     }
 
+    function getMessage(type) {
+      return messages[type];
+    }
   }
 
 })(angular);

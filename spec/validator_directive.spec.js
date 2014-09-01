@@ -6,7 +6,6 @@ describe('chValidator directive:', function() {
     formElement,
     inputElement,
     VALIDATION_EVENT,
-    VALIDATION_MESSAGE,
     VALIDATION_ERROR;
 
   beforeEach(module('ch.Validator'));
@@ -14,7 +13,6 @@ describe('chValidator directive:', function() {
 
   beforeEach(inject(function($rootScope, $compile, $injector) {
     VALIDATION_EVENT = $injector.get('VALIDATION_EVENT');
-    VALIDATION_MESSAGE = $injector.get('VALIDATION_MESSAGE');
     VALIDATION_ERROR = $injector.get('VALIDATION_ERROR');
 
     scope = $rootScope.$new();
@@ -56,13 +54,13 @@ describe('chValidator directive:', function() {
     it('should set an error element after the input field if the field is invalid', function() {
       inputElement.triggerHandler('blur');
 
-      expect(inputElement.next().text()).to.equal(VALIDATION_MESSAGE['REQUIRED']);
+      expect(inputElement.next().text().length).to.be.above(0);
     });
 
     it('should clear the error element after the input field if the field is valid', function() {
       inputElement.triggerHandler('blur');
 
-      expect(inputElement.next().text()).to.equal(VALIDATION_MESSAGE['REQUIRED']);
+      expect(inputElement.next().text().length).to.be.above(0);
 
       scope.foobar = 'blah';
       scope.$digest();
@@ -79,7 +77,7 @@ describe('chValidator directive:', function() {
 
       expect(scope.myForm.foobar.$invalid).to.be.true;
       expect(scope.myForm.foobar.$error[VALIDATION_ERROR['REQUIRED']]).to.be.true;
-      expect(inputElement.next().text()).to.equal(VALIDATION_MESSAGE['REQUIRED']);
+      expect(inputElement.next().text().length).to.be.above(0);
     });
   });
 

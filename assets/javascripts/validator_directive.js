@@ -5,7 +5,7 @@
 
   definitions = [
     'validator',
-    'VALIDATION_MESSAGE',
+    'validatorMessages',
     'VALIDATION_ERROR',
     'VALIDATION_EVENT',
     chValidator
@@ -14,7 +14,7 @@
   angular.module('ch.Validator')
     .directive('chValidator', definitions);
 
-  function chValidator(validator, VALIDATION_MESSAGE, VALIDATION_ERROR, VALIDATION_EVENT) {
+  function chValidator(validator, messages, VALIDATION_ERROR, VALIDATION_EVENT) {
 
     return {
       require: 'ngModel',
@@ -35,18 +35,22 @@
 
       function doValidations() {
         for (var i = 0, len = validationTypes.length; i < len; i++) {
-          doValidation(validationTypes[i]);
+          if (!doValidation(validationTypes[i])) {
+            break;
+          }
         }
 
         function doValidation(type) {
           if (validator[type]) {
             if (!validator[type](ngModel.$viewValue, scope.field)) {
               ngModel.$setValidity(VALIDATION_ERROR[type.toUpperCase()], false);
-              decorate(type.toUpperCase());
+              decorate(type);
+              return false;
             }
             else {
               ngModel.$setValidity(VALIDATION_ERROR[type.toUpperCase()], true);
               clearDecoration();
+              return true;
             }
           }
         }
@@ -55,7 +59,7 @@
       function decorate(type) {
         if (!errorElement) {
           elem.parent().addClass('has-error');
-          errorElement = elem.after('<p class="text-danger">' + VALIDATION_MESSAGE[type] + '</p>').next();
+          errorElement = elem.after('<p class="text-danger">' + messages.get(type) + '</p>').next();
         }
       }
 

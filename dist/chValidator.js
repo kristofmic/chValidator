@@ -22,26 +22,15 @@
       CONFIRM: 'confirm'
     })
     .constant('VALIDATION_ERROR', {
-      DIGITS: 'pcDigits',
-      TEXT: 'pcText',
-      REQUIRED: 'pcRequired',
-      EMAIL: 'pcEmail',
-      PASSWORD: 'pcPassword',
-      PASSWORDLENGTH: 'pcPassword',
-      URL: 'pcUrl',
-      PHONE: 'pcPhone',
-      CONFIRM: 'pcConfirm'
-    })
-    .constant('VALIDATION_MESSAGE', {
-      DIGITS: 'Please only enter numbers',
-      TEXT: 'Please only enter letters',
-      REQUIRED: 'This field is required',
-      EMAIL: 'Please enter a valid email',
-      PASSWORD: 'Password must contain a number, a lowercase letter, and an uppercase letter',
-      PASSWORDLENGTH: 'Password must be between 8 and 20 characters in length',
-      URL: 'Please enter a valid url starting with http://',
-      PHONE: 'Please enter a valid phone number',
-      CONFIRM: 'Fields do not match'
+      DIGITS: 'chDigits',
+      TEXT: 'chText',
+      REQUIRED: 'chRequired',
+      EMAIL: 'chEmail',
+      PASSWORD: 'chPassword',
+      PASSWORDLENGTH: 'chPassword',
+      URL: 'chUrl',
+      PHONE: 'chPhone',
+      CONFIRM: 'chConfirm'
     })
     .constant('VALIDATION_EVENT', {
       VALIDATE: 'VALIDATE'
@@ -123,6 +112,9 @@
       return (!value1 && !value2) || value1 === value2;
     }
 
+    function getMessage(type) {
+      return messages[type];
+    }
   }
 
 })(angular);
@@ -135,7 +127,7 @@
 
   definitions = [
     'validator',
-    'VALIDATION_MESSAGE',
+    'validatorMessages',
     'VALIDATION_ERROR',
     'VALIDATION_EVENT',
     chValidator
@@ -144,7 +136,7 @@
   angular.module('ch.Validator')
     .directive('chValidator', definitions);
 
-  function chValidator(validator, VALIDATION_MESSAGE, VALIDATION_ERROR, VALIDATION_EVENT) {
+  function chValidator(validator, messages, VALIDATION_ERROR, VALIDATION_EVENT) {
 
     return {
       require: 'ngModel',
@@ -165,18 +157,22 @@
 
       function doValidations() {
         for (var i = 0, len = validationTypes.length; i < len; i++) {
-          doValidation(validationTypes[i]);
+          if (!doValidation(validationTypes[i])) {
+            break;
+          }
         }
 
         function doValidation(type) {
           if (validator[type]) {
             if (!validator[type](ngModel.$viewValue, scope.field)) {
               ngModel.$setValidity(VALIDATION_ERROR[type.toUpperCase()], false);
-              decorate(type.toUpperCase());
+              decorate(type);
+              return false;
             }
             else {
               ngModel.$setValidity(VALIDATION_ERROR[type.toUpperCase()], true);
               clearDecoration();
+              return true;
             }
           }
         }
@@ -185,7 +181,7 @@
       function decorate(type) {
         if (!errorElement) {
           elem.parent().addClass('has-error');
-          errorElement = elem.after('<p class="text-danger">' + VALIDATION_MESSAGE[type] + '</p>').next();
+          errorElement = elem.after('<p class="text-danger">' + messages.get(type) + '</p>').next();
         }
       }
 
@@ -200,3 +196,64 @@
     }
   }
 }) (angular);
+
+
+// assets/javascripts/validator_messages.js
+(function(angular) {
+
+  angular.module('ch.Validator')
+    .provider('validatorMessages', validatorMessagesProvider);
+
+  function validatorMessagesProvider() {
+    var
+      messages = {},
+      definitions;
+
+    messages.digits = 'Please only enter numbers';
+    messages.text = 'Please only enter letters';
+    messages.required = 'This field is required';
+    messages.email = 'Please enter a valid email';
+    messages.password = 'Password must contain a number, a lowercase letter, and an uppercase letter';
+    messages.passwordLength = 'Password must be between 8 and 20 characters in length';
+    messages.url = 'Please enter a valid url starting with http://';
+    messages.phone = 'Please enter a valid phone number';
+    messages.confirm = 'Fields do not match';
+
+    definitions = [
+      validatorMessagesFactory
+    ];
+
+    return {
+      setMessage: setMessage,
+      setMessages: setMessages,
+      $get: definitions
+    };
+
+    function setMessage(type, message) {
+      if (messages[type]) {
+        messages[type] = message;
+      }
+    }
+
+    function setMessages(config) {
+      for (var i in config) {
+        setMessage(i, config[i]);
+      }
+    }
+
+    function validatorMessagesFactory() {
+
+      return {
+        get: get
+      };
+
+      function get(type) {
+        return messages[type];
+      }
+
+    }
+
+
+  }
+
+})(angular);
