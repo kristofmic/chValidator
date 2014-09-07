@@ -18,11 +18,12 @@ describe('chValidator directive:', function() {
     validator = $injector.get('validator');
 
     scope = $rootScope.$new();
+    scope.boo = {};
     rootScope = $rootScope;
 
     formElement = angular.element('<form name="myForm">' +
-                                  '<input type="text" name="foobar" ng-model="foobar" ch-validator="required minLength:3 maxLength:10 confirm:baz" />' +
-                                  '<input type="text" name="baz" ng-mode="baz"/>' +
+                                  '<input type="text" name="foobar" ng-model="foobar" ch-validator="required minLength:3 maxLength:10 confirm:boo.baz" />' +
+                                  '<input type="text" name="baz" ng-model="boo.baz"/>' +
                                   '</form>');
 
     $compile(formElement)(scope);
@@ -63,7 +64,7 @@ describe('chValidator directive:', function() {
     describe('confirm', function() {
       it('should pull out the scope model argument', function() {
         validator.confirm = sinon.spy();
-        scope.baz = 'baz';
+        scope.boo.baz = 'baz';
         scope.foobar = 'blah';
         scope.$digest();
         inputElement.triggerHandler('blur');
@@ -83,7 +84,7 @@ describe('chValidator directive:', function() {
 
     it('should set the validity to true if the field is valid', function() {
       scope.foobar = 'blah';
-      scope.baz = 'blah';
+      scope.boo.baz = 'blah';
       scope.$digest();
       inputElement.triggerHandler('keyup');
 
@@ -105,7 +106,7 @@ describe('chValidator directive:', function() {
       expect(inputElement.next().prop('tagName')).to.equal('P');
 
       scope.foobar = 'blah';
-      scope.baz = 'blah';
+      scope.boo.baz = 'blah';
       scope.$digest();
 
       inputElement.triggerHandler('blur');

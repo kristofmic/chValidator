@@ -47,8 +47,23 @@
           if (validator[typeName]) {
             switch(typeName) {
               case VALIDATION_TYPE.CONFIRM:
+                var
+                  scopeProperty,
+                  scopeValue;
+
                 if (typeArgs[1]) {
-                  typeArgs[1] = scope[typeArgs[1]];
+                  scopeProperty = typeArgs[1].split('.');
+
+                  for (var i = 0, len = scopeProperty.length; i < len; i++) {
+                    if (i) {
+                     scopeValue = scopeValue[scopeProperty[i]];
+                    }
+                    else {
+                      scopeValue = scope[scopeProperty[i]];
+                    }
+                  }
+
+                  typeArgs[1] = scopeValue;
                   isValid = validator[typeName].apply(this, typeArgs);
                 }
                 break;
