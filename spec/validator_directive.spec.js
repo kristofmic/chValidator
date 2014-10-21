@@ -86,7 +86,7 @@ describe('chValidator directive:', function() {
       scope.foobar = 'blah';
       scope.boo.baz = 'blah';
       scope.$digest();
-      inputElement.triggerHandler('keyup');
+      inputElement.triggerHandler('blur');
 
       expect(scope.myForm.foobar.$valid).to.be.true;
       expect(scope.myForm.foobar.$error[VALIDATION_ERROR['REQUIRED']]).to.be.false;

@@ -28,7 +28,7 @@
         errorElement,
         validationTypes = attrs.chValidator.split(' ');
 
-      elem.on('blur keyup', doValidations);
+      elem.on('blur', doValidations);
       scope.$on(VALIDATION_EVENT.VALIDATE, doValidations);
 
       function doValidations() {
