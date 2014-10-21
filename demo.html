@@ -57,8 +57,8 @@
       angular.module('ch.Demo', ['ch.Validator'])
       .config(function(validatorMessagesProvider) {
         validatorMessagesProvider.setMessages({
-          //minLength: 'Field must be greater than 8 characters in length',
-          //maxLength: 'Field must be less than 20 characters in length'
+          minLength: 'Passwords must be greater than {{n}} characters in length',
+          maxLength: 'Passwords must be less than {{n}} characters in length'
         });
       })
       .controller('chDemoController', function($scope) {
