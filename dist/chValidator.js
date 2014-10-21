@@ -159,6 +159,7 @@
 
       elem.on('blur', doValidations);
       scope.$on(VALIDATION_EVENT.VALIDATE, doValidations);
+      scope.$on('$destroy', removeValidationListener);
 
       function doValidations() {
         for (var i = 0, len = validationTypes.length; i < len; i++) {
@@ -228,6 +229,10 @@
           elem.parent().removeClass('has-error');
           errorElement = null;
         }
+      }
+
+      function removeValidationListener() {
+        elem.off('blur', doValidations);
       }
 
     }

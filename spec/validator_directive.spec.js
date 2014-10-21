@@ -123,6 +123,20 @@ describe('chValidator directive:', function() {
       expect(scope.myForm.foobar.$error[VALIDATION_ERROR['REQUIRED']]).to.be.true;
       expect(inputElement.next().prop('tagName')).to.equal('P');
     });
+
+    it('should remove the event listener on the $destroy event', function() {
+      expect(inputElement.parent().hasClass('has-error')).to.be.false;
+      inputElement.triggerHandler('blur');
+      expect(inputElement.parent().hasClass('has-error')).to.be.true;
+
+      inputElement.parent().removeClass('has-error');
+      expect(inputElement.parent().hasClass('has-error')).to.be.false;
+
+      rootScope.$broadcast('$destroy');
+
+      inputElement.triggerHandler('blur');
+      expect(inputElement.parent().hasClass('has-error')).to.be.false;
+    });
   });
 
 });
