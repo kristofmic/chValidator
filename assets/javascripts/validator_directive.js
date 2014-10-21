@@ -43,7 +43,8 @@
           var
             isValid = true,
             typeArgs = type.split(':'),
-            typeName =  typeArgs.splice(0, 1, ngModel.$viewValue)[0];
+            typeName =  typeArgs.splice(0, 1, ngModel.$viewValue)[0],
+            decoratorConfig;
 
           if (validator[typeName]) {
             switch(typeName) {
@@ -68,6 +69,11 @@
                   isValid = validator[typeName].apply(this, typeArgs);
                 }
                 break;
+              case VALIDATION_TYPE.MINLENGTH:
+              case VALIDATION_TYPE.MAXLENGTH:
+                isValid = validator[typeName].apply(this, typeArgs);
+                decoratorConfig = { n: typeArgs[1] };
+                break;
               default:
                 isValid = validator[typeName].apply(this, typeArgs);
                 break;
@@ -75,7 +81,7 @@
 
             if (!isValid) {
               ngModel.$setValidity(VALIDATION_ERROR[typeName.toUpperCase()], false);
-              decorate(typeName);
+              decorate(typeName, decoratorConfig);
               return false;
             }
             else {
@@ -87,10 +93,10 @@
         }
       }
 
-      function decorate(type) {
+      function decorate(type, config) {
         if (!errorElement) {
           elem.parent().addClass('has-error');
-          errorElement = elem.after('<p class="text-danger">' + messages.get(type) + '</p>').next();
+          errorElement = elem.after('<p class="text-danger">' + messages.get(type, config) + '</p>').next();
         }
       }
 

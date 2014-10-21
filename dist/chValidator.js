@@ -172,7 +172,8 @@
           var
             isValid = true,
             typeArgs = type.split(':'),
-            typeName =  typeArgs.splice(0, 1, ngModel.$viewValue)[0];
+            typeName =  typeArgs.splice(0, 1, ngModel.$viewValue)[0],
+            decoratorConfig;
 
           if (validator[typeName]) {
             switch(typeName) {
@@ -197,6 +198,11 @@
                   isValid = validator[typeName].apply(this, typeArgs);
                 }
                 break;
+              case VALIDATION_TYPE.MINLENGTH:
+              case VALIDATION_TYPE.MAXLENGTH:
+                isValid = validator[typeName].apply(this, typeArgs);
+                decoratorConfig = { n: typeArgs[1] };
+                break;
               default:
                 isValid = validator[typeName].apply(this, typeArgs);
                 break;
@@ -204,7 +210,7 @@
 
             if (!isValid) {
               ngModel.$setValidity(VALIDATION_ERROR[typeName.toUpperCase()], false);
-              decorate(typeName);
+              decorate(typeName, decoratorConfig);
               return false;
             }
             else {
@@ -216,10 +222,10 @@
         }
       }
 
-      function decorate(type) {
+      function decorate(type, config) {
         if (!errorElement) {
           elem.parent().addClass('has-error');
-          errorElement = elem.after('<p class="text-danger">' + messages.get(type) + '</p>').next();
+          errorElement = elem.after('<p class="text-danger">' + messages.get(type, config) + '</p>').next();
         }
       }
 
@@ -256,9 +262,9 @@
     messages.required = 'This field is required';
     messages.email = 'Please enter a valid email';
     messages.password = 'Password must contain a number, a lowercase letter, and an uppercase letter';
-    messages.minLength = 'Field must be greater than {{N}} characters in length';
-    messages.maxLength = 'Field must be less than {{N}} characters in length';
-    messages.url = 'Please enter a valid url starting with http://';
+    messages.minLength = 'Field must be greater than {{n}} characters in length';
+    messages.maxLength = 'Field must be less than {{n}} characters in length';
+    messages.url = 'Please enter a valid url starting with http:// or https://';
     messages.phone = 'Please enter a valid phone number';
     messages.confirm = 'Fields do not match';
 
@@ -290,8 +296,19 @@
         get: get
       };
 
-      function get(type) {
-        return messages[type];
+      function get(type, config) {
+        var
+          msg = messages[type];
+
+        if (config && angular.isObject(config)) {
+          angular.forEach(config, interpolateMessage);
+        }
+
+        return msg;
+
+        function interpolateMessage(val, key) {
+          msg = msg.replace(new RegExp('{{' + key + '}}', 'g'), val);
+        }
       }
 
     }

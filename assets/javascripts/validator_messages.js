@@ -13,9 +13,9 @@
     messages.required = 'This field is required';
     messages.email = 'Please enter a valid email';
     messages.password = 'Password must contain a number, a lowercase letter, and an uppercase letter';
-    messages.minLength = 'Field must be greater than {{N}} characters in length';
-    messages.maxLength = 'Field must be less than {{N}} characters in length';
-    messages.url = 'Please enter a valid url starting with http://';
+    messages.minLength = 'Field must be greater than {{n}} characters in length';
+    messages.maxLength = 'Field must be less than {{n}} characters in length';
+    messages.url = 'Please enter a valid url starting with http:// or https://';
     messages.phone = 'Please enter a valid phone number';
     messages.confirm = 'Fields do not match';
 
@@ -47,8 +47,19 @@
         get: get
       };
 
-      function get(type) {
-        return messages[type];
+      function get(type, config) {
+        var
+          msg = messages[type];
+
+        if (config && angular.isObject(config)) {
+          angular.forEach(config, interpolateMessage);
+        }
+
+        return msg;
+
+        function interpolateMessage(val, key) {
+          msg = msg.replace(new RegExp('{{' + key + '}}', 'g'), val);
+        }
       }
 
     }
