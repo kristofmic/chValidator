@@ -35,11 +35,11 @@
     return self;
 
     function validateDigits(value) {
-      return validDigits.test(value);
+      return value ? validDigits.test(value) : true;
     }
 
     function validateText(value) {
-      return !!value && !invalidText.test(value);
+      return value ? !invalidText.test(value): true;
     }
 
     function validateRequired(value) {
@@ -47,11 +47,11 @@
     }
 
     function validateEmail(value) {
-      return validEmail.test(value);
+      return value ? validEmail.test(value) : true;
     }
 
     function validatePassword(value) {
-      return validPassword.test(value);
+      return value ? validPassword.test(value) : true;
     }
 
     function validateMinLength(value, length) {
@@ -69,11 +69,11 @@
     }
 
     function validateUrl(value) {
-      return validUrl.test(value);
+      return value ? validUrl.test(value) : true;
     }
 
     function validatePhoneNumber(value) {
-      return validPhoneNumber.test(value);
+      return value ? validPhoneNumber.test(value) : true;
     }
 
     function validateConfirm(value1, value2) {

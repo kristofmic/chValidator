@@ -20,8 +20,7 @@ describe('validator', function() {
     var
       validNum = 13423,
       validString = '134544',
-      invalid = '1343b3',
-      notDefined;
+      invalid = '1343b3';
 
     it('should return true for a valid set of digits', function(){
       expect(service.digits(validNum)).to.be.true;
@@ -30,15 +29,13 @@ describe('validator', function() {
 
     it('should return false for an invalid set of digits', function() {
       expect(service.digits(invalid)).to.be.false;
-      expect(service.digits(notDefined)).to.be.false;
     });
   });
 
   describe('validateText()', function() {
     var
       valid = 'asdfsdf',
-      invalid = 'asdf34dfd',
-      notDefined;
+      invalid = 'asdf34dfd';
 
     it('should return true for a valid set of text', function(){
       expect(service.text(valid)).to.be.true;
@@ -46,7 +43,6 @@ describe('validator', function() {
 
     it('should return false for an invalid set of text', function() {
       expect(service.text(invalid)).to.be.false;
-      expect(service.text(notDefined)).to.be.false;
     });
   });
 
@@ -69,22 +65,18 @@ describe('validator', function() {
   describe('validateEmail()', function() {
     var
       valid = 'ch@foo.com',
-      empty = '',
       invalid = 'ch',
       invalid2 = 'ch@',
-      invalid3 = 'ch@foo',
-      notDefined;
+      invalid3 = 'ch@foo';
 
     it('should return true for a valid set of email', function(){
       expect(service.email(valid)).to.be.true;
     });
 
     it('should return false for an invalid set of email', function() {
-      expect(service.email(empty)).to.be.false;
       expect(service.email(invalid)).to.be.false;
       expect(service.email(invalid2)).to.be.false;
       expect(service.email(invalid3)).to.be.false;
-      expect(service.email(notDefined)).to.be.false;
     });
   });
 
@@ -92,10 +84,8 @@ describe('validator', function() {
     var
       valid = 'Fooobar1',
       valid2 = 'Fooobar!',
-      empty = '',
       invalidSpecial = 'Fooobarr',
-      invalidCap = 'fooobar1!',
-      notDefined;
+      invalidCap = 'fooobar1!';
 
     it('should return true for a valid set of password', function(){
       expect(service.password(valid)).to.be.true;
@@ -103,10 +93,8 @@ describe('validator', function() {
     });
 
     it('should return false for an invalid set of password', function() {
-      expect(service.password(empty)).to.be.false;
       expect(service.password(invalidSpecial)).to.be.false;
       expect(service.password(invalidCap)).to.be.false;
-      expect(service.password(notDefined)).to.be.false;
     });
   });
 
@@ -158,10 +146,8 @@ describe('validator', function() {
     var
       valid = 'http://www.foobar.com',
       valid2 = 'http://foobar.com',
-      empty = '',
       invalid = 'www.foobar.com',
-      invalid2 = 'foobar.com',
-      notDefined;
+      invalid2 = 'foobar.com';
 
     it('should return true for a valid set of url', function(){
       expect(service.url(valid)).to.be.true;
@@ -169,10 +155,8 @@ describe('validator', function() {
     });
 
     it('should return false for an invalid set of url', function() {
-      expect(service.url(empty)).to.be.false;
       expect(service.url(invalid)).to.be.false;
       expect(service.url(invalid2)).to.be.false;
-      expect(service.url(notDefined)).to.be.false;
     });
   });
 
@@ -183,8 +167,7 @@ describe('validator', function() {
       valid3 = '234-342-2344',
       empty = '',
       invalid = '23234w',
-      invalid2 = '+223434',
-      notDefined;
+      invalid2 = '+223434';
 
     it('should return true for a valid set of phone number', function(){
       expect(service.phone(valid)).to.be.true;
@@ -193,10 +176,8 @@ describe('validator', function() {
     });
 
     it('should return false for an invalid set of phone number', function() {
-      expect(service.phone(empty)).to.be.false;
       expect(service.phone(invalid)).to.be.false;
       expect(service.phone(invalid2)).to.be.false;
-      expect(service.phone(notDefined)).to.be.false;
     });
   });
 
