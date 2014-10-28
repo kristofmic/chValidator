@@ -40,6 +40,34 @@
 
 })(angular);
 
+// assets/javascripts/no_blur_directive.js
+(function(angular) {
+
+  var
+  definitions;
+
+  definitions = [
+    chNoBlur
+  ];
+
+  angular.module('ch.Validator')
+    .directive('chNoBlur', definitions);
+
+  function chNoBlur() {
+
+    return {
+      scope: false,
+      link: link
+    };
+
+    function link(scope, elem, attrs) {
+      elem.off('blur');
+
+    }
+  }
+}) (angular);
+
+
 // assets/javascripts/validator.js
 (function(angular) {
 
@@ -82,7 +110,7 @@
     }
 
     function validateText(value) {
-      return !!value && !invalidText.test(value);
+      return value ? !invalidText.test(value): true;
     }
 
     function validateRequired(value) {
